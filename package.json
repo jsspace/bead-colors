@@ -1,0 +1,32 @@
+{
+  "name": "@meltbead/bead-colors",
+  "version": "0.1.0",
+  "description": "Perler, Hama, Artkal, MARD and Nabbi fuse bead color codes with HEX and RGB references",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": { "types": "./index.d.ts", "default": "./index.js" },
+    "./perler": { "types": "./palette.d.ts", "default": "./palettes/perler.js" },
+    "./perler-legacy": { "types": "./palette.d.ts", "default": "./palettes/perler-legacy.js" },
+    "./perler-103": { "types": "./palette.d.ts", "default": "./palettes/perler-103.js" },
+    "./hama": { "types": "./palette.d.ts", "default": "./palettes/hama.js" },
+    "./hama-solid": { "types": "./palette.d.ts", "default": "./palettes/hama-solid.js" },
+    "./artkal-m": { "types": "./palette.d.ts", "default": "./palettes/artkal-m.js" },
+    "./artkal-s": { "types": "./palette.d.ts", "default": "./palettes/artkal-s.js" },
+    "./nabbi": { "types": "./palette.d.ts", "default": "./palettes/nabbi.js" },
+    "./mard": { "types": "./palette.d.ts", "default": "./palettes/mard.js" },
+    "./mard-185": { "types": "./palette.d.ts", "default": "./palettes/mard-185.js" },
+    "./mard-291": { "types": "./palette.d.ts", "default": "./palettes/mard-291.js" }
+  },
+  "files": ["index.js", "index.d.ts", "palette.d.ts", "palettes/", "README.md", "LICENSE", "LICENSES/", "THIRD_PARTY_NOTICES.md"],
+  "keywords": ["perler", "perler beads", "fuse beads", "bead colors", "hama", "artkal", "mard", "nabbi", "pixel art"],
+  "homepage": "https://meltbead.com/colors",
+  "repository": { "type": "git", "url": "git+https://github.com/jsspace/bead-colors.git" },
+  "bugs": { "url": "https://github.com/jsspace/bead-colors/issues" },
+  "scripts": { "test": "node --test", "prepack": "npm test" },
+  "engines": { "node": ">=18" },
+  "publishConfig": { "access": "public" }
+}
