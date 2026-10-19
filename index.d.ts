@@ -6,3 +6,9 @@ export declare const palettes: Readonly<Record<PaletteId, BeadPalette>>;
 export declare function getPalette(id: string): BeadPalette | undefined;
 export declare function getColor(paletteId: string, code: string): BeadColor | undefined;
 export declare function nearestColors(hex: string, paletteId: string, options?: { limit?: number; includeEffects?: boolean }): Array<BeadColor & { distance: number }>;
+
+export type IndexedBeadColor = BeadColor & Readonly<{ paletteId: PaletteId; brand: string; series: string }>;
+export type MatchedBeadColor = IndexedBeadColor & Readonly<{ distance: number }>;
+export declare const allColors: readonly IndexedBeadColor[];
+export declare const primaryPaletteIds: readonly PaletteId[];
+export declare function matchColorAcrossPalettes(input: string | { paletteId: PaletteId; code: string }, options?: { paletteIds?: readonly PaletteId[]; includeEffects?: boolean }): MatchedBeadColor[];

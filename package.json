@@ -1,6 +1,6 @@
 {
   "name": "@meltbead/bead-colors",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Perler, Hama, Artkal, MARD and Nabbi fuse bead color codes with HEX and RGB references",
   "type": "module",
   "license": "MIT",

@@ -16,6 +16,14 @@ export const palettes = Object.freeze({
   nabbi, mard, 'mard-185': mard185, 'mard-291': mard291,
 });
 
+/** Flat view of every published palette entry, including deliberate subset duplicates. */
+export const allColors = Object.freeze(Object.entries(palettes).flatMap(([paletteId, palette]) =>
+  palette.colors.map(color => ({ paletteId, brand: palette.brand, series: palette.series, ...color })),
+));
+
+/** One representative palette per brand or bead series for cross-palette matching. */
+export const primaryPaletteIds = Object.freeze(['perler', 'hama', 'artkal-m', 'artkal-s', 'nabbi', 'mard']);
+
 export function getPalette(id) {
   return Object.hasOwn(palettes, id) ? palettes[id] : undefined;
 }
@@ -49,4 +57,28 @@ export function nearestColors(hex, paletteId, options = {}) {
     }))
     .sort((a, b) => a.distance - b.distance || a.code.localeCompare(b.code))
     .slice(0, limit);
+}
+
+/** Find the closest screen-reference code in each requested palette. */
+export function matchColorAcrossPalettes(input, options = {}) {
+  let hex;
+  if (typeof input === 'string') {
+    hex = input;
+  } else if (input && typeof input === 'object') {
+    const source = getColor(input.paletteId, input.code);
+    if (!source) throw new RangeError(`Unknown color: ${input.paletteId}/${input.code}`);
+    if (!source.hex) throw new RangeError(`Color has no single HEX reference: ${input.paletteId}/${input.code}`);
+    hex = source.hex;
+  } else {
+    throw new TypeError('input must be a HEX string or { paletteId, code }');
+  }
+  parseHex(hex);
+  const { paletteIds = primaryPaletteIds, includeEffects = false } = options;
+  if (!Array.isArray(paletteIds)) throw new TypeError('paletteIds must be an array');
+  return [...new Set(paletteIds)].map(paletteId => {
+    const palette = getPalette(paletteId);
+    if (!palette) throw new RangeError(`Unknown palette: ${paletteId}`);
+    const match = nearestColors(hex, paletteId, { limit: 1, includeEffects })[0];
+    return match ? { paletteId, brand: palette.brand, series: palette.series, ...match } : undefined;
+  }).filter(Boolean);
 }
